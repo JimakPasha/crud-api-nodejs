@@ -20,6 +20,7 @@
   "devDependencies": {
     "@types/node": "^20.11.17",
     "@types/webpack": "^5.28.5",
+    "@types/uuid": "^9.0.8",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "nodemon": "^3.0.3",
