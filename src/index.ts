@@ -1,7 +1,7 @@
 
-import { createServer } from 'http';
+import { IncomingMessage, ServerResponse, createServer } from 'http';
 
-import { v4 as uuidv4 } from 'uuid';
+import * as uuid from 'uuid';
 
 import 'dotenv/config';
 
@@ -14,14 +14,7 @@ interface IUser {
   hobbies: string[],
 }
 
-let users: IUser[] = [
-  {
-    id: '1',
-    username: 'Jack',
-    age: 30,
-    hobbies: ['music', 'sport'],
-  },
-];
+let users: IUser[] = [];
 
 const server = createServer((req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -49,7 +42,7 @@ const server = createServer((req, res) => {
             res.end(JSON.stringify({ error: 'Username and age are required' }));
           } else {
             const newUser = {
-              id: uuidv4(),
+              id: uuid.v4(),
               username,
               age,
               hobbies: hobbies || [],
@@ -66,7 +59,15 @@ const server = createServer((req, res) => {
 
   if (url?.startsWith('/api/users/')) {
     const userId = url.split('/').at(-1);
+
+    if (!userId || !uuid.validate(userId)) {
+      res.writeHead(400);
+      res.end(JSON.stringify({ error: `Id isn't uuid` }));
+      return;
+    }
+
     const user = users.find(({ id }) => id === userId);
+
 
     if (!user) {
       res.writeHead(404);
