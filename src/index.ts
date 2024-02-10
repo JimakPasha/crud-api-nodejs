@@ -42,7 +42,7 @@ const server = createServer((req, res) => {
           body+= chunk.toString();
         })
         .on('end', () => {
-          const { username, age, hobbies }: IUser = JSON.parse(body);
+          const { username, age, hobbies }: Omit<IUser, 'id'> = JSON.parse(body);
 
           if (!username || !age) {
             res.writeHead(400);
@@ -78,10 +78,32 @@ const server = createServer((req, res) => {
           res.end(JSON.stringify(user));
           break;
         case 'PUT':
-        
-        break;
+          let body: string = '';
+
+          req
+          .on('data', (chunk) => {
+            body+= chunk.toString();
+          })
+          .on('end', () => {
+            const { username, age, hobbies }: Partial<IUser> = JSON.parse(body);
+  
+            const updatedUser = {
+              id: user.id,
+              username: username || user.username,
+              age: age || user.age,
+              hobbies: hobbies || user.hobbies,
+            }
+
+            users = users.map((user) => user.id === userId ? updatedUser : user);
+
+            res.writeHead(200);
+            res.end(JSON.stringify(updatedUser));
+          })
+          break;
         case 'DELETE':
-        
+          users = users.filter(({ id }) => id !== userId);
+          res.writeHead(204);
+          res.end();
         break;
       }
     }

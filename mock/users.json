@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "username": "Allan",
+      "age": 14,
+      "hobbies": []
+    },
+    {
+      "username": "Mark",
+      "age": 68,
+      "hobbies": ["art"]
+    },
+    {
+      "username": "Kim",
+      "age": 56,
+      "hobbies": ["films", "swimming"]
+    },
+    {
+      "username": "Phill",
+      "age": 45,
+      "hobbies": ["cars", "motobikes"]
+    }
+  ]
+}
