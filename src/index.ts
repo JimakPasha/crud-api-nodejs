@@ -4,7 +4,7 @@ import { routes } from './routes';
 
 const PORT = process.env.PORT || 4000;
 
-const server = createServer(routes);
+export const server = createServer(routes);
 
 server.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
