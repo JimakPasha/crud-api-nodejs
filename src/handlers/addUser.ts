@@ -2,7 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import * as uuid from 'uuid';
 import { addUser as addUserDb } from '../db';
 import { createError } from '../utils';
-import { errorMessages } from '../constants';
+import { errorMessages, StatusCodes } from '../constants';
 import { IUser } from '../models';
 
 export const addUser = (req: IncomingMessage, res: ServerResponse) => {
@@ -16,7 +16,7 @@ export const addUser = (req: IncomingMessage, res: ServerResponse) => {
     const { username, age, hobbies }: Omit<IUser, 'id'> = JSON.parse(body);
 
     if (!username || !age || !hobbies) {
-      createError(res, 400, errorMessages.requireFields)
+      createError(res, StatusCodes.BadRequest, errorMessages.requireFields)
     } else {
       const newUser = {
         id: uuid.v4(),
@@ -26,7 +26,7 @@ export const addUser = (req: IncomingMessage, res: ServerResponse) => {
       }
       addUserDb(newUser);
       
-      res.writeHead(201);
+      res.writeHead(StatusCodes.SuccesRequest);
       res.end(JSON.stringify(newUser));
     }
   });

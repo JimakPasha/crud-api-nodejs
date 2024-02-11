@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { getUser, updateUser as updateUserDb } from '../db';
 import { IUser } from '../models';
+import { StatusCodes } from '../constants';
 
 export const updateUser = (req: IncomingMessage, res: ServerResponse, userId: string) => {
   let body: string = '';
@@ -22,7 +23,7 @@ export const updateUser = (req: IncomingMessage, res: ServerResponse, userId: st
 
     updateUserDb(user.id, updatedUser);
 
-    res.writeHead(200);
+    res.writeHead(StatusCodes.OK);
     res.end(JSON.stringify(updatedUser));
   })
 }

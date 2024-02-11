@@ -3,7 +3,7 @@ import * as uuid from 'uuid';
 import { getUser } from './db';
 import { deleteByIdUser, getAllUsers, getByIdUser, addUser, updateUser } from './handlers';
 import { createError } from './utils';
-import { errorMessages } from './constants';
+import { errorMessages, StatusCodes } from './constants';
 
 export const routes = (req: IncomingMessage, res: ServerResponse) => {
   try {
@@ -26,14 +26,14 @@ export const routes = (req: IncomingMessage, res: ServerResponse) => {
       const userId = url.split('/').at(-1);
   
       if (!userId || !uuid.validate(userId)) {
-        createError(res, 400, errorMessages.errorUuid);
+        createError(res, StatusCodes.BadRequest, errorMessages.errorUuid);
         return;
       }
   
       const user = getUser(userId);
   
       if (!user) {
-        createError(res, 404, errorMessages.userNotFound);
+        createError(res, StatusCodes.NotFound, errorMessages.userNotFound);
       } else {
         switch (method) {
           case 'GET':
@@ -50,8 +50,8 @@ export const routes = (req: IncomingMessage, res: ServerResponse) => {
   
       return;
     }
-    createError(res, 404, `Url: ${url} ${errorMessages.notFound}`);
+    createError(res, StatusCodes.NotFound, `Url: ${url} ${errorMessages.notFound}`);
   } catch {
-    createError(res, 500, errorMessages.internalServer);
+    createError(res, StatusCodes.InternalServer, errorMessages.internalServer);
   }
 }

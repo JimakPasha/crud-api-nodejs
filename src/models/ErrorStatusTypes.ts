@@ -1,5 +1,7 @@
-type ServerErrorStatusTypes = 500;
+import { StatusCodes } from '../constants';
 
-type ClientErrorStatusTypes = 400 | 404;
+type ServerErrorStatusTypes = StatusCodes.InternalServer;
+
+type ClientErrorStatusTypes = StatusCodes.BadRequest | StatusCodes.NotFound;
 
 export type ErrorStatusTypes = ServerErrorStatusTypes | ClientErrorStatusTypes;
