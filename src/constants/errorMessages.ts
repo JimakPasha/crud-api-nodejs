@@ -4,5 +4,5 @@ export const errorMessages = {
   userNotFound: 'User not found',
   notFound: 'not found',
   internalServer: 'Internal Server Error',
-  notFoundUrl: (url: string) => `Url: ${url} not found`
-}
+  notFoundUrl: (url: string) => `Url: ${url} not found`,
+};

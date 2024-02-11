@@ -126,7 +126,9 @@ describe('3 scenario: validations', () => {
   });
 
   test('should return 400 if POST user in body absent age field', async () => {
-    const res = await response.post(USERS_URL).send({ username: 'Test', hobbies: ['sport'] });
+    const res = await response
+      .post(USERS_URL)
+      .send({ username: 'Test', hobbies: ['sport'] });
     expect(res.statusCode).toBe(StatusCodes.BadRequest);
     expect(res.body.errorMessage).toBe(errorMessages.requireFields);
   });
@@ -150,7 +152,9 @@ describe('3 scenario: validations', () => {
   });
 
   test('should return 404 if PUT user not found user', async () => {
-    const res = await response.put(`${USERS_URL}/${nonExistentUserId}`).send(mockupdatedUser);
+    const res = await response
+      .put(`${USERS_URL}/${nonExistentUserId}`)
+      .send(mockupdatedUser);
     expect(res.statusCode).toBe(StatusCodes.NotFound);
     expect(res.body.errorMessage).toBe(errorMessages.userNotFound);
   });
@@ -180,11 +184,9 @@ describe('4 scenario: uuid', () => {
     expect(user1.age).toEqual(user2.age);
     expect(user1.hobbies).toEqual(user2.hobbies);
   });
-  
+
   test('should POST create user generate uuid', async () => {
     const res = await response.post(USERS_URL).send(mockUser);
     expect(uuid.validate(res.body.id)).toBe(true);
   });
 });
-
-

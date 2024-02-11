@@ -6,4 +6,4 @@ export const deleteByIdUser = (res: ServerResponse, userId: string) => {
   deleteUser(userId);
   res.writeHead(StatusCodes.NoContent);
   res.end();
-}
+};
